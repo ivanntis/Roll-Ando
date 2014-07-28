@@ -19,7 +19,7 @@ public class Company {
     private byte[] mimeLogo;
     private String slogan;
     private String nit;
-    private List<phone> Pones;
+    private List<Phone> phones;
     private List<Address> directions;
     private String description;
 

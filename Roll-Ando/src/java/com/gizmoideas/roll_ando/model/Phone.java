@@ -10,6 +10,6 @@ package com.gizmoideas.roll_ando.model;
  *
  * @author ipena
  */
-public class phone {
+public class Phone {
     
 }

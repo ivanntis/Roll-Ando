@@ -63,7 +63,7 @@ public class NewAccount implements Serializable {
         if (user.validatePassword(confirmPass) && validateCaptcha()) {
             step = 2;
         } else {
-            System.out.println("las contraseñas o el captcha no coiciden");
+            System.out.println("las contraseÃ±as o el captcha no coiciden");
         }
     }
 

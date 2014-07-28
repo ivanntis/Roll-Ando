@@ -1,0 +1,156 @@
+<?xml version='1.0'  ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"  
+                xmlns:ice="http://www.icesoft.com/icefaces/component"                
+                template="resources/template/templateFirst.xhtml">
+
+
+    <ui:define name="content">
+        <h:head>
+            <!--<link rel="stylesheet" type="text/css" href="./xmlhttp/css/rime/rime.css"/>-->
+            <ice:outputStyle href="./resources/css/rime/rime.css" id="outputStyle1"/>
+            <style type="text/css">
+                .stepImg { width: 20%;
+                }
+                .stepDesc { width: content-box;
+                            height: 100%;
+                            vertical-align: middle;
+                }
+                .activePanel { background-color: #9A2EFE;
+                               color: #000;
+                               font-weight: bolder; 
+                               border-radius: 4px 4px 4px 4px;  
+                               box-shadow: 3px 5px 0 #333;
+                }
+                .inactivePanel { 
+                    font-weight: normal;    
+                    border-radius: 2px 2px 2px 2px; 
+                    opacity:0.2;
+
+                }
+                .genPanelGrid { background-color: #D8D8D8;
+                                border-radius: 5px 5px 5px 5px;                            
+                                box-shadow:  0px 5px 10px #333;
+
+                }
+                .panelBorder{ 
+                    border-radius: 5px 5px 5px 5px;                            
+                    padding: 3px;
+                    box-shadow:  0px 5px 10px #333;
+                    margin-top:10px
+
+                }
+                .enfasisText{
+                    font-weight: bolder;
+                    color: #484848;
+                }                
+                 
+               
+
+            </style>   
+        </h:head>
+        <h:body>
+            <h:form id="loginForm">
+                <ice:outputConnectionStatus id="status" style="position: absolute;right: 30px" />
+                <ice:panelGrid class="genPanelGrid" columns="3" bgcolor="#D8D8D8" width="85%">
+                    <ice:panelGroup styleClass="#{(NewAccount.step == 1) ? 'activePanel':'inactivePanel'}">
+                        <ice:panelGrid columns="2"  columnClasses="stepImg,stepDesc" >                    
+                            <ice:graphicImage  value="resources/img/infoPersonal.png" width="100%"/>
+                            <ice:panelGrid columns="1" >
+                                <ice:outputText value="Paso 1"/>
+                                <ice:outputText value="Ingresa tus datos personales"/>
+                            </ice:panelGrid>
+                        </ice:panelGrid>                    
+                    </ice:panelGroup>
+                    <ice:panelGroup  styleClass="#{(NewAccount.step == 2) ? 'activePanel':'inactivePanel'}" >
+                        <ice:panelGrid columns="2"  columnClasses="stepImg,stepDesc" >
+                            <ice:graphicImage value="resources/img/infoPersonal.png" width="100%"/>
+                            <ice:panelGrid columns="1" >
+                                <ice:outputText value="Paso 2"/>
+                                <ice:outputText value="Confirmando Registro"/>
+                            </ice:panelGrid>
+                        </ice:panelGrid>
+                    </ice:panelGroup>
+                    <ice:panelGroup  styleClass="#{(NewAccount.step == 3) ? 'activePanel':'inactivePanel'}">
+                        <ice:panelGrid columns="2"  columnClasses="stepImg,stepDesc"  >                        
+                            <ice:graphicImage value="resources/img/infoPersonal.png" width="100%"/>
+                            <ice:panelGrid columns="1" border="0">
+                                <ice:outputText value="Paso 3"/>
+                                <ice:outputText value="Ingresa tus datos personales"/>
+                            </ice:panelGrid>
+                        </ice:panelGrid>                    
+                    </ice:panelGroup>
+                </ice:panelGrid>
+
+
+                <ace:panel style="width: 36%" header="Registro" styleClass="panelBorder">                    
+                    <h:panelGrid columns="1" cellpadding="3" rendered="#{(NewAccount.step == 3)}">
+                        <ice:outputText value="Nombres y Apellidos"/>
+                        <ice:inputText id="nombreInput" value="#{NewAccount.user.name}" size="60" label="Nombres" required="true"/> 
+                        <ace:message for="nombreInput"/>
+                        <ice:outputText value="Correo Electronico"/>
+                        <ice:inputText id="emailInput" value="#{NewAccount.user.mail}" size="60" label="E-Mail" required="true"/> 
+                        <ace:message for="emailInput"/>
+                        <ice:outputText value="Clave"/>
+                        <ice:inputSecret redisplay="true" autocomplete="false" id="passwordInput" value="#{NewAccount.user.password}"  size="60" label="Clave"  required="true"/>
+                        <ace:message for="passwordInput"/>                                                   <ice:outputText value="Confirmacion de clave"/>
+                        <ice:inputSecret redisplay="true" autocomplete="false" id="passwordConfirmInput" value="#{NewAccount.confirmPass}"  size="60" label="Clave"  required="true"/>
+                        <ace:message for="passwordConfirmInput"/>                           
+                        <ice:outputText value="Fecha de Nacimiento"/>
+                        <ice:selectInputDate inputTitle="FechaNacimiento"  
+                                             value="#{NewAccount.user.birthDay}"
+                                             id="birthdDayInput"                                 
+                                             renderAsPopup="true"
+                                             renderMonthAsDropdown="true"
+                                             renderYearAsDropdown="true" 
+                                             immediate="true"
+                                             />
+                        <ace:message for="birthdDayInput"/>
+                        <ice:outputText value="Tipo Usuario"/>
+                        <ice:selectOneRadio id="typeUser" value="#{NewAccount.user.type}" layout="lineDirection" >
+                            <f:selectItem itemLabel="Pasajero" itemValue="1"></f:selectItem>  
+                            <f:selectItem itemLabel="Empresa" itemValue="0"></f:selectItem>  
+
+                        </ice:selectOneRadio>   
+                        <ice:outputText  escape="false" value="#{NewAccount.captchaHtml}"/>
+                        <ice:commandButton value="Continuar" actionListener="#{NewAccount.saveUserData}" style="width:100%"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="1" rendered="#{(NewAccount.step == 2)}">                                                      
+                        <ice:outputText value="Se envio un email con el codigo de verificacion al correo electronico #{NewAccount.user.mail} para confirmar tu cuenta el codigo"/>                            
+                        <hr/>
+                        <ice:outputText value="Datos de Seguridad" styleClass="enfasisText"/>    
+                        <br/>
+                        <ice:outputText value="Pregunta Seguridad"/>
+                        <ice:inputText id="askSecure" value="#{NewAccount.user.askSecure}" size="62" label="code" required="true"/> 
+                        <ice:outputText value="Respuesta Seguridad"/>
+                        <ice:inputText id="answerSecure" value="#{NewAccount.user.answerSecure}" size="62" label="code" required="true"/> 
+                        <ice:outputText value="Codigo de Verificacion"/>
+                        <ice:inputText id="codeSecure" value="#{NewAccount.codeValidation}" size="62" label="code" required="true"/> 
+                        <ice:commandButton value="Confirmar" actionListener="#{NewAccount.confirmRegiter}" style="width:100%"/>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="1" rendered="#{(NewAccount.step == 1)}">                                                      
+                        <ice:outputText value="Datos importantes para dar una experiencia mas efectiva para que siga Roll-Ando"/>                            
+                        <hr  width="100%" align="center"/>
+                        <ice:outputText value="Datos Basicos" styleClass="enfasisText"/>    
+                        <div class="divSeparator"/>
+                        <hr  width="100%" align="center"/>
+                        <ice:outputText value="Datos Facturacion" styleClass="enfasisText"/>    
+                        <br/>
+                        <ice:panelGroup>
+                        <ice:commandButton value="Guardar" actionListener="#{NewAccount.saveDataAdditional}" style="float: left;width:50%"/>
+                        <ice:commandButton value="Omitir" actionListener="#{NewAccount.skipData}" style="float: left;width:50%"/>
+                        </ice:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+            </h:form>
+
+
+        </h:body>
+    </ui:define>
+</ui:composition>

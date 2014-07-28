@@ -4,7 +4,7 @@ Roll-Ando
 Software ERP-CRM Transporte publico
 
 =========
-Librerias Necesarias para la compilacion.
+Librerias Necesarias para la compilacion. Crear una carpeta lib al mismo nivel de src y web Roll-Ando/lib
 
 "\lib\commons-logging.jar"
 "\lib\el-api-2.2.1-b03.jar"
